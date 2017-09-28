@@ -4,6 +4,474 @@
 # permitted in any medium without royalty provided the copyright notice and
 # this notice are preserved. This file is offered as-is, without any warranty.
 
+2017-09-28  Peter Simons  <simons@cryp.to>
+
+	AX_SUBDIRS_CONFIGURE: cosmetic
+
+2017-09-28  Peter Simons  <simons@cryp.to>
+
+	AX_TLS: check for thread_local storage qualifier keyword
+	The AX_TLS macro tests for thread local storage support. It checks a variety of
+	non-standard extensions, but forgets to try the official C++11 keyword
+	thread_local as well.
+
+	Submitted via https://savannah.gnu.org/patch/?9424.
+
+2017-09-28  Peter Simons  <simons@cryp.to>
+
+	AX_CHECK_DEFINE: fix warning about unused variable
+	If the compiler flags include -Werror=unused, compiling the test source in
+	AX_CHECK_DEFINE fails with a compile error if the define exists, resulting in
+	AX_CHECK_DEFINE assuming the define is not set.
+
+	Submitted via https://savannah.gnu.org/patch/?9452.
+
+2017-09-28  Stanislav Brabec  <sbrabec@suse.com>
+
+	Add support for fallthrough in AX_GCC_FUNC_ATTRIBUTE
+	If two case statements are not separated by break, new gcc issues
+	warning. This warning can be suppressed by __attribute((fallthrough)).
+	Add test for it.
+
+2017-09-28  Reini Urban  <rurban@cpan.org>
+
+	m4: update AX_ASM_INLINE
+	to use AC_COMPILE_IFELSE
+
+	m4: update AX_COMPILE_CHECK_SIZEOF
+	replace obsolete AC_TRY_COMPILE with AC_COMPILE_IFELSE([AC_LANG_PROGRAM
+
+2017-09-27  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	ax_valgrind_check: support make 3.8x
+	define smth = was introduced only in GNU Make 4.0. Use older form to
+	support GNU Make 3.8x
+
+	ax_valgrind_check: run check-valgrind recursively
+	Switch check-valgrind and check-valgrind-$TOOL into recursive Automake
+	targets. It is still required to put @VALGRIND_CHECK_RULES@ into each
+	directory with tests, but it is now possible to run `make check-valgrind'
+	from top-level directory.
+
+2017-08-28  Max Satula  <maksym.satula@gmail.com>
+
+	Fix AX_LIB_ORACLE_OCI macro for plain C
+	1. Use C compiler, not C++.
+	2. Split LDFLAGS into LDFLAGS and LIBS.
+	   However, merge them back to ORACLE_OCI_LDFLAGS afterwards
+	   to preserve interface backward compatibility.
+	3. Replace C++ style comments with C style.
+
+	Resolves mloskot/autotools-modules#2
+
+2017-08-23  Olaf Mandel  <olaf@mandel.name>
+
+	AX_OPEN62541_*: adapt to v0.2 of the open62541 lib
+	 * The AX_OPEN62541_CHECK_H macro now uses a slightly different default
+	   list of headers
+	 * The AX_OPEN62541_PATH macro adds another directory to the include
+	   path
+
+2017-08-16  Peter Simons  <simons@cryp.to>
+
+	AX_BOOST_BASE: fix revision number
+
+	AX_CHECK_GL: fix revision number
+
+	Merge remote-tracking branch 'github/master'
+
+2017-08-16  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Use AS_IF ansd follow progress
+	Simplify checking of path
+
+2017-08-15  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Further simplification of ax_boost_base
+
+	Factorize version expanding in libboost detection
+
+	Factorize base program
+
+	Simplify cpu detection by using canonical host
+
+	Privatize ac_boost_lib_path
+
+	Use private variable for ac_boost_path
+	Do not cluter global name space
+
+	Use helper function for boost
+	Simplify the code path
+
+	Use m4sh in ax_boost_base
+
+2017-08-15  Helmut Grohne  <helmut@subdivi.de>
+
+	Fix crossbuild for AX_BOOST_BASE
+	gource fails to cross build from source for wicked reasons. It
+	terminates with:
+
+	| Could not link against -lGLU !
+
+	But that is a red herring. GLU is found. It just happens that ax_lib
+	contains something old. The problem here is that BOOSTLIBDIR ends up
+	being empty. It is derived from BOOST_LDFLAGS e.g. in AX_BOOST_SYSTEM or
+	AX_BOOST_FILESYSTEM. Those latter macros expect that BOOST_LDFLAGS
+	contains a -L flag. That flag goes missing during cross compilation. In
+	AC_BOOST_BASE, the variable "libsubdirs" is properly set up to contain
+	the multiarch libdir of the host architecture first. However, it is only
+	searched for native compilation. For Debian systems, removing the cross
+	compiling guard would likely resolve the issue. I'm less sure that this
+	is universally correct though. Maybe a good solution would be to split
+	"libsubdirs" into the multiarch directory (which would always be
+	searched) and the others, which would only be searched for native
+	compilation. I am attaching a patch for this approach.
+
+2017-08-15  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Do not forget to save LDFLAGS
+	ax_check_gl forget to save LDFLAGS
+
+	Thanks to  Jerome Benoit <calculus@rezozer.net>
+
+	debian-bug; https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=848363
+
+2017-08-15  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Add newer version of python
+	Add newer version of python. Thanks to debian
+
+2017-08-12  Harenome Ranaivoarivony-Razanajato  <ranaivoarivony-razanajato@hareno.me>
+
+	AX_PROG_HELP2MAN: new macro
+	AX_PROG_HELP2MAN is a macro which helps using help2man to automatically
+	produce man pages. It checks whether help2man is available on the
+	system, adds the --disable-help2man option to the configure script and
+	sets various variables for use in configure or Makefile.am files.
+
+2017-08-01  Nico Madysa  <nico.madysa@tu-dresden.de>
+
+	AX_BOOST_BASE: Make tests more portable.
+	This commit makes `test` calls in AX_BOOST_BASE more uniform.
+	Comparisons with the empty string are replaced with the `-n` and `-z`
+	arguments. Comparisons with non-empty strings are done in the common portable
+	way (e.g. `test "x$succeesed" = "xyes"`). The fragile `-a` argument is
+	replaced by `&&`.
+
+2017-08-01  Nico Madysa  <nico.madysa@tu-dresden.de>
+
+	AX_BOOST_BASE: Fix missing BOOST_LDFLAGS.
+	AX_BOOST_BASE first checks if Boost is installed in a standard location
+	and sets BOOST_CPPFLAGS and BOOST_LDFLAGS accordingly.
+
+	If Boost cannot be found, these variables are reset. Further proceedings
+	depend on whether the actual location was passed in via
+	--with-boost=<path> or not. If it was, BOOST_CPPFLAGS is determined
+	automatically based on the given path. This automatic detection, however, did
+	not include BOOST_LDFLAGS.
+
+	Consequently, if Boost is in a non-standard location that is given via
+	--with-boost, the user would also have to specify --with-boost-libdir.
+
+	This commit fixes this issue by also determining BOOST_LDFLAGS
+	automatically in this particular branch of execution. The performed
+	check is very similar to the one done in various other locations of the
+	macro.
+
+2017-08-01  Peter Simons  <simons@cryp.to>
+
+	Merge remote-tracking branch 'github/master'
+
+2017-08-01  Harenome Ranaivoarivony-Razanajato  <ranaivoarivony-razanajato@hareno.me>
+
+	AX_SUBDIRS_CONFIGURE: fix empty argument handling
+	This commit fixes the way empty arguments are handled (i.e nothing is
+	done) in AX_SUBDIRS_CONFIGURE as opposed to the previous implementation
+	which could set wrong variables when empty arguments were provided.
+
+2017-07-25  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Create a negative gnu make variable
+	The makefile variable `ifnGNUmake' is set to #, otherwise
+	it is set to the empty string. This is useful for including a special
+	features in a Makefile, which can be handled
+	by other versions of make or to specify else like clause.
+
+	Allow action found action not found for  ax_check_gnu_make.m4
+	Improve action to be done
+
+	Move git ignore to top
+	It is better for semantic to assign variable at top of rules
+
+2017-07-05  Karl-Johan Alm  <karljohan-alm@garage.co.jp>
+
+	AX_JNI_INCLUDE_DIR: Do not use AC_CHECK_FILE as it is unavailable on some systems.
+
+2017-06-27  Simon McVittie  <smcv@debian.org>
+
+	AX_PYTHON_DEVEL: Swap values of PYTHON_EXTRA_LIBS, PYTHON_EXTRA_LDFLAGS
+	The LIBS and SYSLIBS Python configuration variables are lists of
+	libraries, with typical values (on Debian GNU/Linux) being
+
+	    LIBS = -lpthread -ldl -lutil
+	    SYSLIBS = -lm
+
+	so they should clearly be in a LIBS variable, not LDFLAGS.
+	Conversely, the LINKFORSHARED Python configuration variable contains
+	miscellaneous linker options, with its value on Debian being
+
+	    -Xlinker -export-dynamic -Wl,-O1 -Wl,-Bsymbolic-functions
+
+	so it should be in the LDFLAGS.
+
+	This matters when linking statically or using a particularly
+	pedantic linker: LDFLAGS appear on the linker command-line before
+	the object files to be linked and (with some linkers) cannot satisfy
+	undefined symbols, whereas LIBS appear after the object files in
+	dependency order.
+
+2017-06-15  Marvin Schmidt  <marv@exherbo.org>
+
+	AX_RUBY_EXT: Use RbConfig instead of deprecated Config module
+
+2017-06-05  David Seifert  <soap@gentoo.org>
+
+	Move AX_RECURSIVE_EVAL to its own file
+	* `AX_RECURSIVE_EVAL` is useful on its own, and consumers
+	  should not be required to pull in the whole of
+	  `AX_COMPUTE_RELATIVE_PATHS` to use it.
+
+2017-04-25  Vasil Velichkov  <vasil_vel@abv.bg>
+
+	Fix initialization of CODE_COVERAGE_GENHTML_OPTIONS
+	There is no variable with name CODE_COVERAGE_GENHTML_OPTIONS_DEFAULTS so
+	use the CODE_COVERAGE_GENHTML_OPTIONS_DEFAULT variable instead
+
+2017-04-21  Peter Simons  <simons@cryp.to>
+
+	AX_SUBDIRS_CONFIGURE: fix documentation layout for proper HTML rendering
+
+2017-04-21  Harenome Ranaivoarivony-Razanajato  <ranaivoarivony-razanajato@hareno.me>
+
+	AX_SUBDIRS_CONFIGURE: new macro
+	AX_SUBDIRS_CONFIGURE is a macro akin to AC_CONFIG_SUBDIRS which allows
+	to run other configure scripts. AX_SUBDIRS_CONFIGURE attempts to follow
+	the same rules as AC_CONFIG_SUBDIRS such as:
+
+	- command line arguments from the parent configure script are given to
+	  the child configure script.
+	- some arguments are modified (for instance `--cache-file`, `--srcdir`)
+
+	However, as opposed to AC_CONFIG_SUBDIRS, AX_SUBDIRS_CONFIGURE takes 4
+	additional parameters which correspond to:
+
+	- arguments that must always be passed down to child configure scripts.
+	- arguments that may be merged with existing arguments.
+	- arguments that must replace existing arguments.
+	- arguments that must never be passed to the configure scripts.
+
+	Subdirectories recorded with AX_SUBDIRS_CONFIGURE are added to the new
+	`subdirs_extra` variable instead of `subdirs`.
+
+2017-04-06  Peter Simons  <simons@cryp.to>
+
+	AX_ELISP: replace unicode characters with simpler ASCII variants
+
+	AX_PROG_EMACS: replace unicode characters with simpler ASCII variants
+
+2017-04-06  Thien-Thi Nguyen  <ttn@gnu.org>
+
+	AX_ELISP: New submission
+	I am submitting this to the Autoconf Archive in case it
+	might be more widely useful than for EDB, its original home.
+	As elisp.m4, it was mentioned in passing here:
+	http://lists.gnu.org/archive/html/gnu-emacs-sources/2016-11/msg00001.html
+
+	* m4/ax_elisp.m4: New file.
+
+2017-04-06  Thien-Thi Nguyen  <ttn@gnu.org>
+
+	AX_PROG_EMACS: New submission
+	* m4/ax_prog_emacs.m4: New file.
+
+2017-03-29  Peter Simons  <simons@cryp.to>
+
+	AX_SYS_LARGEFILE_SENSITIVE: fix spelling of immediately
+
+	Fix serial numbers after spelling fixes from cf2bd2c981de.
+
+2017-03-28  Josh Soref  <jsoref@users.noreply.github.com>
+
+	spelling: versions
+
+	spelling: version
+
+	spelling: variable
+
+	spelling: useful
+
+	spelling: upon
+
+	spelling: unusable
+
+	spelling: unsupported
+
+2017-03-29  Josh Soref  <jsoref@users.noreply.github.com>
+
+	spelling: unknown
+
+2017-03-28  Josh Soref  <jsoref@users.noreply.github.com>
+
+	spelling: understand
+
+	spelling: supposed
+
+	spelling: superfluous
+
+	spelling: successful
+
+	spelling: success
+
+	spelling: succeeds
+
+	spelling: subtract
+
+	spelling: statement
+
+	spelling: squeeze
+
+	spelling: specified
+
+	spelling: shortcircuit
+
+	spelling: sharedstatedir
+
+	spelling: separator
+
+	spelling: separate
+
+	spelling: search
+
+	spelling: running
+
+	spelling: respectively
+
+	spelling: represents
+
+	spelling: relative
+
+	spelling: provide
+
+	spelling: probabilistic
+
+	spelling: preferably
+
+	spelling: overridden
+
+	spelling: output
+
+	spelling: optimization
+
+	spelling: normally
+
+	spelling: needed
+
+	spelling: modified
+
+	spelling: moaning
+
+	spelling: minimum
+
+	spelling: merrily
+
+	spelling: library
+
+	spelling: instead
+
+	spelling: instantiations
+
+	spelling: instance
+
+	spelling: installation
+
+	spelling: increments
+
+	spelling: implicitly
+
+	spelling: implementation
+
+	spelling: identifier
+
+	spelling: filenames
+
+	spelling: explicitly
+
+	spelling: existence
+
+	spelling: executed
+
+	spelling: executable
+
+	spelling: example
+
+	spelling: especially
+
+	spelling: equivalent
+
+	spelling: environment
+
+	spelling: dynamically
+
+	spelling: directory
+
+	spelling: directories
+
+	spelling: detection
+
+	spelling: dependency
+
+	spelling: deliberately
+
+	spelling: constructed
+
+	spelling: consequence
+
+	spelling: cleansing
+
+	spelling: changelog
+
+	spelling: borlandc
+
+	spelling: bit specific
+
+	spelling: binary
+
+	spelling: available
+
+	spelling: autoconf
+
+	spelling: at least
+
+	spelling: anything
+
+	spelling: always
+
+	spelling: addressable
+
+	spelling: additionally
+
+	spelling: absolute
+
+2017-03-23  Rafał Rzepecki  <divided.mind@gmail.com>
+
+	Make the version check in AX_RUBY_DEVEL actually work
+
+2017-03-22  Rafał Rzepecki  <divided.mind@gmail.com>
+
+	Fix AX_RUBY_DEVEL
+	- Use AX_WITH_PROG instead of the obsolete AX_WITH_RUBY
+	- Use RbConfig instead of the obsolete mkmf/config
+
 2017-03-21  Peter Simons  <simons@cryp.to>
 
 	AX_COMPILER_FLAGS_C(XX)FLAGS: only use -Wno-suggest-attribute=format if compiler supports it
