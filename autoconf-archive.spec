@@ -6,7 +6,7 @@
 #
 Name     : autoconf-archive
 Version  : 2017.09.28
-Release  : 2
+Release  : 3
 URL      : https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz
 Source0  : https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz
 Source99 : https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz.sig
