@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x41BC28FE99089D72 (simons@cryp.to)
 #
 Name     : autoconf-archive
-Version  : 2017.09.28
-Release  : 4
-URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz
-Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz
-Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2017.09.28.tar.xz.sig
+Version  : 2018.03.13
+Release  : 5
+URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
+Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
+Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0
@@ -63,14 +63,14 @@ doc components for the autoconf-archive package.
 
 
 %prep
-%setup -q -n autoconf-archive-2017.09.28
+%setup -q -n autoconf-archive-2018.03.13
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1521069029
+export SOURCE_DATE_EPOCH=1522246868
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -82,7 +82,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1521069029
+export SOURCE_DATE_EPOCH=1522246868
 rm -rf %{buildroot}
 %make_install
 

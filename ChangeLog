@@ -4,6 +4,180 @@
 # permitted in any medium without royalty provided the copyright notice and
 # this notice are preserved. This file is offered as-is, without any warranty.
 
+2018-03-13  Peter Simons  <simons@cryp.to>
+
+	AX_LIB_POSTGRESQL: re-format to canonic layout and fix serial number
+
+	AX_COMPILER_VERSION: bump serial number
+
+2018-03-13  Vasil Dimov  <vd@FreeBSD.org>
+
+	fix checks for boost chrono and unit_test
+	The two test programs could produce a compiler warnings (or errors if
+	-Werror is engaged) about unused variables and fail the checks. It is
+	better to have test programs that do not produce warnings.
+
+	Closes https://github.com/peti/autoconf-archive/pull/148.
+
+2018-03-13  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Robustify
+	Check pkg-config return
+
+2018-03-12  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Populate like pkgconfig the variables
+
+	Use pkg-config for postgresql
+
+	Add action found/not found to PostgreSQL
+
+	Modernize ax_lib_postgresql
+	Avoid a compilation failure on debian
+
+2018-03-09  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Fix version extraction with old sdcc
+
+	Support sdcc compiler
+
+2018-02-13  Peter Simons  <simons@cryp.to>
+
+	AX_DIST_RPM: various fixes
+	- At some point macros was added to aminclude_static.am instead of
+	  aminclude.am. Change description.
+
+	- Inserted make conditional so rules don't mess around in subdirectories.
+	  Putting .spec files here via dist-hook breaks rpmbuild.
+
+	- Run gawk with LC_ALL=C to produce english dates in RPMChangeLog understood by
+	  rpmbuild.
+
+	- Escape $PLATFORM_SUFFIX so variable given at configure time is used instead
+	  of env variable present at the time aclocal is run.
+
+	- Change .i. to just .. in rpm target. i* was probably meant to match i386 but
+	  does not match x86_64.
+
+	If there is any suggestions to improving this just let me know. The check for
+	being at the top-level makefile seems a bit ugly but I can't come up with a
+	better solution. Checking for MAKELEVEL == 0 doesn't work.
+
+2018-02-13  Ricardo Wurmus  <rekado@elephly.net>
+
+	m4: Add AX_R_PACKAGE macro.
+	* m4/ax_r_package.m4: New file.
+
+2018-02-13  Kip Warner  <kip@thevertigo.com>
+
+	ax_var_{push,pop}.m4 were both missing auxiliary macros found in the other...
+
+2018-01-15  Reuben Thomas  <rrt@sc3d.org>
+
+	ax_python.m4: improve documentation slightly
+	Remove explicit, duplicate (and out-of-date!) mention of Python versions in
+	the documentation at the top of the file.
+
+2018-01-15  Peter Simons  <simons@cryp.to>
+
+	Merge pull request #147 from rurban/cflags
+	ax_compiler_flags_cflags: c++ fixes
+
+2018-01-15  Reini Urban  <rurban@cpan.org>
+
+	ax_compiler_flags_cflags: c++ fixes
+	Several warning flags are incompatible with c++:
+	-Wnested-externs -Wmissing-prototypes -Wstrict-prototypes -Wdeclaration-after-statement
+	-Wold-style-definition -Wimplicit-function-declaration -Wjump-misses-init
+
+2018-01-15  Reini Urban  <rurban@cpan.org>
+
+	ax_compiler_flags_ldflags: harden
+	Add -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack
+
+	but not yet the brand-new textonly, retpolineplt linker flags. Let's wait
+	what gcc decides on the flags for Spectre, clang went with retpolineplt.
+
+2018-01-11  Peter Simons  <simons@cryp.to>
+
+	Merge pull request #144 from akopytov/master
+	AX_GCC_ARCHFLAG: update Broadwell CPUID patterns.
+
+2018-01-10  Alexey Kopytov  <akopytov@gmail.com>
+
+	AX_GCC_ARCHFLAG: update Broadwell CPUID patterns.
+	Update Broadwell patterns in ax_gcc_archflag.m4 to match Intel
+	documentation. Per "Intel® 64 and IA-32 Architectures Software
+	Developer’s Manual", Vol. 4, Table 2-1 "CPUID Signature Values of
+	DisplayFamily_DisplayModel" the following Family/Model combinations are
+	possible for Broadwell CPUs:
+
+	- 06_3DH
+	- 06_47H
+	- 06_4FH
+	- 06_56H
+
+	Before this patch only the first combination was recognized, with all
+	other Broadwell models falling into the '*??6??:*:*:*' case
+	corresponding to Core 2.
+
+2018-01-10  Philip Chimento  <philip@endlessm.com>
+
+	AX_PKG_CHECK_MODULES: Normalize whitespace in package lists
+	It can make configure.ac files more readable to list the packages on
+	separate lines. Strip the newlines and extra whitespace with
+	m4_normalize.
+
+2018-01-03  Bojan Nikolic  <bojan@bnikolic.co.uk>
+
+	AX_BOOST_THREAD: correct bug in case statement for solaris and mingw32
+	Closes https://github.com/peti/autoconf-archive/pull/142.
+
+2017-11-29  Enrico M. Crisostomo  <enrico.m.crisostomo@gmail.com>
+
+	Fix build errors
+
+	Update file header
+
+	Add ax_prog_date.m4
+	This macro tries to determine the type of the date (1) command and some of
+	its non-standard capabilities.
+
+2017-11-24  Evgeny Lensky  <surfernsk@gmail.com>
+
+	Fix check for system libraries in both lib64 and lib
+	if host_cpu = [i?86] libsubdirs = "", but it is necessary libsubdirs = "lib"
+	Invalid execution, superfluous comma.
+
+2017-11-14  Harenome Ranaivoarivony-Razanajato  <ranaivoarivony-razanajato@hareno.me>
+
+	AX_PROG_HELP2MAN: fix default behaviour
+	This commit fixes the default behaviour of the AX_PROG_HELP2MAN macro
+	when the input program list is empty. The new implementation correctly
+	uses the $(PACKAGE_NAME) variable as the default target as opposed to
+	the previous implementation which produced incorrect make rules.
+
+2017-11-11  Corey Farrell  <git@cfware.com>
+
+	AX_GCC_FUNC_ATTRIBUTE: Add support for 'sentinel' attribute.
+
+2017-11-10  Werner Lemberg  <wl@gnu.org>
+
+	s/illegal/invalid/
+
+2017-10-05  Reini Urban  <rurban@cpan.org>
+
+	AX_COMPILER_FLAGS: add new gcc flags
+	-Wduplicated-cond since gcc 6
+	-Wduplicated-branches since gcc 7
+	-Wlogical-op since gcc 4.3
+	-Wrestrict since gcc 7
+	-Wnull-dereference since gcc 6
+	-Wjump-misses-init since gcc 4.5
+	-Wdouble-promotion since gcc 4.6
+
+	See also https://kristerw.blogspot.de/2017/09/useful-gcc-warning-options-not-enabled.html
+
 2017-09-28  Peter Simons  <simons@cryp.to>
 
 	AX_SUBDIRS_CONFIGURE: cosmetic
