@@ -6,7 +6,7 @@
 #
 Name     : autoconf-archive
 Version  : 2018.03.13
-Release  : 5
+Release  : 6
 URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
 Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz.sig
