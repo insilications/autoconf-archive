@@ -5,16 +5,15 @@
 # Source0 file verified with key 0x41BC28FE99089D72 (simons@cryp.to)
 #
 Name     : autoconf-archive
-Version  : 2018.03.13
-Release  : 6
-URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
-Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz
-Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2018.03.13.tar.xz.sig
-Summary  : No detailed summary available
+Version  : 2019.01.06
+Release  : 7
+URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
+Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
+Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz.sig
+Summary  : A collection of freely re-usable Autoconf macros
 Group    : Development/Tools
 License  : GPL-3.0
-Requires: autoconf-archive-data
-Requires: autoconf-archive-doc
+Requires: autoconf-archive-license = %{version}-%{release}
 BuildRequires : sed
 
 %description
@@ -36,19 +35,10 @@ tool chain that the benefits from having this tool available as widely as
 possible outweigh the disadvantage that some authors may choose to use it,
 too, for proprietary software.
 
-%package data
-Summary: data components for the autoconf-archive package.
-Group: Data
-
-%description data
-data components for the autoconf-archive package.
-
-
 %package dev
 Summary: dev components for the autoconf-archive package.
 Group: Development
-Requires: autoconf-archive-data
-Provides: autoconf-archive-devel
+Provides: autoconf-archive-devel = %{version}-%{release}
 
 %description dev
 dev components for the autoconf-archive package.
@@ -62,15 +52,23 @@ Group: Documentation
 doc components for the autoconf-archive package.
 
 
+%package license
+Summary: license components for the autoconf-archive package.
+Group: Default
+
+%description license
+license components for the autoconf-archive package.
+
+
 %prep
-%setup -q -n autoconf-archive-2018.03.13
+%setup -q -n autoconf-archive-2019.01.06
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522246868
+export SOURCE_DATE_EPOCH=1547050768
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -82,24 +80,24 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1522246868
+export SOURCE_DATE_EPOCH=1547050768
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/autoconf-archive
+cp COPYING %{buildroot}/usr/share/package-licenses/autoconf-archive/COPYING
 %make_install
 
 %files
 %defattr(-,root,root,-)
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/autoconf-archive/AUTHORS
-/usr/share/autoconf-archive/COPYING
-/usr/share/autoconf-archive/COPYING.EXCEPTION
-/usr/share/autoconf-archive/README
 
 %files dev
 %defattr(-,root,root,-)
 /usr/share/aclocal/*.m4
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/autoconf\-archive/*
 %doc /usr/share/info/*
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/autoconf-archive/COPYING

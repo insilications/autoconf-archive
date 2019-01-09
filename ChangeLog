@@ -1,8 +1,383 @@
-# Copyright (c) 2014 Autoconf Archive Maintainers <autoconf-archive-maintainers@gnu.org>
+# Copyright (c) 2019 Autoconf Archive Maintainers <autoconf-archive-maintainers@gnu.org>
 #
 # Copying and distribution of this file, with or without modification, are
 # permitted in any medium without royalty provided the copyright notice and
 # this notice are preserved. This file is offered as-is, without any warranty.
+
+2018-12-29  Reini Urban  <rurban@cpan.org>
+
+	AX_ASM_INLINE: accept asm also
+
+2018-11-14  Ossama Othman  <ossama.othman@intel.com>
+
+	ax_check_enable_debug: Correct NDEBUG regression.
+	Reintroduce change (6e6c447) that addressed NDEBUG redefinition when
+	using both the AX_CODE_COVERAGE and AX_CHECK_ENABLE_DEBUG macros.  It
+	was lost in the previous patch to ax_check_enable_debug.m4 (d049eeb).
+
+2018-10-30  Ossama Othman  <ossama.othman@intel.com>
+
+	Fix AX_CODE_COVERAGE 'distclean' related comments
+	The local Automake distclean target is distclean-local, not
+	dist-clean-local.  Update the AX_CODE_COVERAGE macro documentation,
+	accordingly.
+
+2018-10-19  Peter Simons  <simons@cryp.to>
+
+	AX_SWIG_ENABLE_CXX: don't set $SWIG unless it was actually detected
+	Suggested-by: Christian Ferrari <camauz@yahoo.com>
+
+2018-08-25  Daniel Black  <daniel@linux.ibm.com>
+
+	ax_gcc_archflag: include POWER7 -> POWER10
+	POWER6 is missing - couldn't find hardware to test (and it was
+	a long time ago).
+
+	Tested on P7 - P9.
+
+	Added POWER10 as its in development and unlikely to change.
+
+	Closes https://github.com/autoconf-archive/autoconf-archive/pull/175.
+
+2018-08-05  Peter Simons  <simons@cryp.to>
+
+	Merge pull request #173 from petk/patch-ac-help-string
+	Replace obsolete AC_HELP_STRING with AS_HELP_STRING
+
+2018-08-05  Maximilian Heinzler  <m.heinzler@heinzler.de>
+
+	Fix doxygen error message
+	Show the actual unsatisfied dependency instead of repeating the currently tested feature.
+
+2018-07-31  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_HELP_STRING with AS_HELP_STRING
+	Autoconf made several macros obsolete including AC_HELP_STRING somewhere
+	in 2003 in Autoconf 2.59 version. Macro should be replaced with
+	AS_HELP_STRING.
+
+2018-07-29  Peter Kokot  <peterkokot@gmail.com>
+
+	Merge pull request #170 from petk/patch-ac-compile-1
+	Replace AC_TRY_COMPILE and AC_LANG_
+
+2018-07-28  Peter Kokot  <peterkokot@gmail.com>
+
+	Merge pull request #171 from petk/patch-ac-compile-2
+	Replace obsolete AC_TRY_COMPILE with AC_COMPILE_IFELSE
+
+	Fix typos
+
+2018-07-27  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_TRY_COMPILE with AC_COMPILE_IFELSE
+	Autoconf made several macros obsolete including the AC_TRY_COMPILE in
+	2000 and since Autoconf 2.50:
+	http://git.savannah.gnu.org/cgit/autoconf.git/tree/ChangeLog.2
+
+	These macros should be replaced with the current AC_COMPILE_IFELSE
+	instead.
+
+	Refs:
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/AC_005fACT_005fIFELSE-vs-AC_005fTRY_005fACT.html
+
+2018-07-26  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace AC_TRY_COMPILE and AC_LANG_
+	Autoconf 2.50 in 2001 made several macros obsolete. These include macros
+	for temporary changing the language - AC_LANG_SAVE, AC_LANG_CPLUSPLUS,
+	AC_LANG_C, and AC_LANG_RESTORE. Instead of these the AC_LANG_PUSH and
+	AC_LANG_POP macros should be used with later Autoconf versions.
+
+	AC_TRY_COMPILE macros should be replaced with AC_COMPILE_IFELSE.
+
+	Refs:
+	- http://git.savannah.gnu.org/cgit/autoconf.git/tree/NEWS
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Language-Choice.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+
+2018-07-26  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace AC_TRY_LINK and AC_LANG_
+	Autoconf 2.50 in 2001 made several macros obsolete. These include macros
+	for temporary changing the language - AC_LANG_SAVE, AC_LANG_CPLUSPLUS,
+	and AC_LANG_RESTORE. Instead of these the AC_LANG_PUSH and
+	AC_LANG_POP macros should be used with later Autoconf versions.
+
+	AC_TRY_LINK macros should be replaced with AC_LINK_IFELSE and
+	AC_LANG_PROGRAM.
+
+	Refs:
+	- http://git.savannah.gnu.org/cgit/autoconf.git/tree/NEWS
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Language-Choice.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+
+2018-07-25  Peter Simons  <simons@cryp.to>
+
+	Merge pull request #164 from gdraheim/all-permissive
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+	Merge pull request #167 from petk/patch-ac-try-link
+	Replace obsolete AC_TRY_LINK macros with AC_LINK_IFELSE
+
+2018-07-24  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_TRY_LINK_FUNCTION macros
+	Autoconf 2.50 introduced new macros in favor of the AC_TRY_FOO. Since
+	Autoconf 2.55 the AC_TRY_LINK_FUNC macro has been additionally marked
+	as obsolete and suggested to be replaced with AC_LINK_IFELSE and
+	AC_LANG_CALL.
+
+	Refs:
+	- http://git.savannah.gnu.org/cgit/autoconf.git/tree/NEWS
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+
+2018-07-24  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_TRY_LINK macros with AC_LINK_IFELSE
+	Autoconf 2.50 (released in 2001) made several macros obsolete including
+	the AC_TRY_LINK which should now be replaced with the AC_LINK_IFELSE.
+
+	Refs:
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/AC_005fACT_005fIFELSE-vs-AC_005fTRY_005fACT.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+
+2018-07-23  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_TRY_CPP with AC_PREPROC_IFELSE
+	The AC_TRY_CPP macro has been made obsolete in Autoconf 2.50 which was
+	released in 2001. It should be replaced with AC_PREPROC_IFELSE macro.
+
+	Refs:
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/AC_005fACT_005fIFELSE-vs-AC_005fTRY_005fACT.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Running-the-Preprocessor.html
+
+2018-07-23  Peter Kokot  <peterkokot@gmail.com>
+
+	Replace obsolete AC_TRY_RUN with AC_RUN_IFELSE
+	Autoconf made several macros obsolete including the AC_TRY_RUN and in
+	2000 and since Autoconf 2.50:
+	http://git.savannah.gnu.org/cgit/autoconf.git/tree/ChangeLog.2
+
+	These macros should be replaced with the current AC_RUN_IFELSE instead.
+
+	This patch was created with the help of the autoupdate script.
+
+	Reference docs:
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Obsolete-Macros.html
+	- https://www.gnu.org/software/autoconf/manual/autoconf-2.59/autoconf.pdf
+
+2018-07-22  Guido Draheim  <guidod@gmx.de>
+
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+	all-permissive for macros from Guido Draheim / Maarten Bosmans
+
+2018-07-21  Guido Draheim  <guidod@gmx.de>
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+	all-permissive for macros from Guido Draheim (only author)
+
+2018-07-16  Wolfgang Stöggl  <c72578@yahoo.de>
+
+	AX_BOOST_BASE: add powerpc64 powerpc64le to archs
+	- Add further possibilities for values of $host_cpu.
+	  This fixes issues in distros like Fedora, where
+	  $host_cpu is powerpc64 for ppc64 and powerpc64le for ppc64le
+
+	Closes https://github.com/autoconf-archive/autoconf-archive/pull/162.
+
+2018-06-30  Stefan Weil  <sw@weilnetz.de>
+
+	AX_CHECK_COMPILE_FLAG: released under all-permissive license
+	Replace GPL3 + Autoconf exception by all-permissive license.
+
+	See discussion at https://github.com/tesseract-ocr/tesseract/pull/1559.
+
+2018-06-30  Stefan Weil  <sw@weilnetz.de>
+
+	Fix typos found by codespell
+
+2018-06-08  Will Thompson  <will@willthompson.co.uk>
+
+	ax_compiler_flags_cflags: fix disabling C-only warnings
+	https://github.com/autoconf-archive/autoconf-archive/pull/147 introduced
+	a regression where, because -Wdeclaration-after-statement etc. are
+	appended to the compile flags after the user-supplied list of warnings
+	to disable, it is impossible to disable these warnings.
+
+2018-05-29  Carnë Draug  <carandraug+dev@gmail.com>
+
+	ax_jni_include_dir.m4: require AC_CANONICAL_HOST to make host_os available
+
+2018-05-21  Alexander Lakhin  <exclusion@gmail.com>
+
+	ax_lib_postgresql: Double-quote the literal with square brackets
+
+2018-05-05  Krzesimir Nowak  <qdlacz@gmail.com>
+
+	Some cleanups in C++17 checking code
+	There is a released version of clang that supports C++17, so drop all
+	the ifdefs that made clang to skip some checks.
+
+	Also, a __cplusplus macro is specified to expand to 201703L, so fix
+	the check accordingly.
+
+2018-04-21  Andreas Schwab  <schwab@suse.de>
+
+	AX_BOOST_BASE: add riscv64 to the list of lib64 architectures
+
+2018-04-19  Krzesimir Nowak  <krzesimir@kinvolk.io>
+
+	ax_cxx_compile_stdcxx.m4: Drop the check for default C++ version support
+	The problem with the check is that it can't detect whether the version
+	is with extensions or not. So it can't take the "noext" or "ext"
+	option into account.
+
+	This may be a problem when an extended version of C++ has a feature
+	that conflicts with another feature from the C++ standard and we have
+	no way to tell the macro to add a "-std" flag anyway.
+
+	An example:
+
+	    using namespace std::complex_literals;
+	    std::complex<double> c = 1.0;
+	    c += 1.0i;
+	    std::cout << "abs" << c << " = " << abs(c) << '\n';
+
+	Here, the "1.0i" constant is either a GCC extension if compiled with
+	-std=gnu++14 or a standard C++ operator if compiled with
+	-std=c++14. If a GCC extension is used, the snippet fails to
+	compile. Unfortunately, recent GCC versions default to gnu++14, so
+	this code fails to compile by default.
+
+	Dropping the check forces the macro to evaluate compiler flags with
+	taking the "ext"/"noext" option into account.
+
+	Issue spotted by Frédéric Mangano-Tarumi.
+
+2018-03-23  Peter Hill  <zed.three@gmail.com>
+
+	AX_LIB_HDF5: fix order of flags
+	When iterating over flags from h5cc, the HDF5_{CPPFLAGS,LDFLAGS,LIBS}
+	variables were assembled in reverse order. This causes problems when
+	linking against static libraries
+
+2018-03-20  Peter Simons  <simons@cryp.to>
+
+	AX_CODE_COVERAGE: re-format header into canon layout
+
+	Merge remote-tracking branch 'github/master'
+
+2018-03-19  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Use non localised date for ax_am_macros
+	Do not punk utf-8 in Makefile due to date
+
+2018-03-18  Bastien Roucariès  <bastien.roucaries+debian@gmail.com>
+
+	Force use of GNU make
+	GNU make was required so check it use
+
+	Do not use coverage rules outside topdir
+	It was not supported so speed up rules
+
+	Use AX_ADD_AM_MACRO_STATIC
+	Avoid some error in case of no coverage included
+
+	Expand enable/disable code coverage
+	Try to simplify this file
+
+2018-03-18  Terry Droeger  <terry.droeger@gmail.com>
+
+	fix serial number for previous fix
+
+	fix header file path and version check conditional
+
+2018-03-14  Maximilian Heinzler  <m.heinzler@heinzler.de>
+
+	Remove warning about C++17
+	Now that C++17 has been standardized this warning can be removed.
 
 2018-03-13  Peter Simons  <simons@cryp.to>
 
