@@ -6,13 +6,14 @@
 #
 Name     : autoconf-archive
 Version  : 2019.01.06
-Release  : 7
+Release  : 8
 URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
-Source99 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz.sig
-Summary  : A collection of freely re-usable Autoconf macros
+Source1 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz.sig
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0
+Requires: autoconf-archive-info = %{version}-%{release}
 Requires: autoconf-archive-license = %{version}-%{release}
 BuildRequires : sed
 
@@ -39,6 +40,7 @@ too, for proprietary software.
 Summary: dev components for the autoconf-archive package.
 Group: Development
 Provides: autoconf-archive-devel = %{version}-%{release}
+Requires: autoconf-archive = %{version}-%{release}
 
 %description dev
 dev components for the autoconf-archive package.
@@ -47,9 +49,18 @@ dev components for the autoconf-archive package.
 %package doc
 Summary: doc components for the autoconf-archive package.
 Group: Documentation
+Requires: autoconf-archive-info = %{version}-%{release}
 
 %description doc
 doc components for the autoconf-archive package.
+
+
+%package info
+Summary: info components for the autoconf-archive package.
+Group: Default
+
+%description info
+info components for the autoconf-archive package.
 
 
 %package license
@@ -62,28 +73,34 @@ license components for the autoconf-archive package.
 
 %prep
 %setup -q -n autoconf-archive-2019.01.06
+cd %{_builddir}/autoconf-archive-2019.01.06
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1547050768
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1573789141
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1547050768
+export SOURCE_DATE_EPOCH=1573789141
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/autoconf-archive
-cp COPYING %{buildroot}/usr/share/package-licenses/autoconf-archive/COPYING
+cp %{_builddir}/autoconf-archive-2019.01.06/COPYING %{buildroot}/usr/share/package-licenses/autoconf-archive/e88f6aea9379eb98a7bbea965fc7127a64b41ad9
 %make_install
 
 %files
@@ -96,8 +113,11 @@ cp COPYING %{buildroot}/usr/share/package-licenses/autoconf-archive/COPYING
 %files doc
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/autoconf\-archive/*
-%doc /usr/share/info/*
+
+%files info
+%defattr(0644,root,root,0755)
+/usr/share/info/autoconf-archive.info
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/autoconf-archive/COPYING
+/usr/share/package-licenses/autoconf-archive/e88f6aea9379eb98a7bbea965fc7127a64b41ad9
