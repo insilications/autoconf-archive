@@ -6,10 +6,10 @@
 #
 Name     : autoconf-archive
 Version  : 2019.01.06
-Release  : 8
+Release  : 9
 URL      : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
 Source0  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
-Source1 : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz.sig
+Source1  : https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-3.0
@@ -80,11 +80,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573789141
+export SOURCE_DATE_EPOCH=1605119927
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -94,10 +94,10 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1573789141
+export SOURCE_DATE_EPOCH=1605119927
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/autoconf-archive
 cp %{_builddir}/autoconf-archive-2019.01.06/COPYING %{buildroot}/usr/share/package-licenses/autoconf-archive/e88f6aea9379eb98a7bbea965fc7127a64b41ad9
