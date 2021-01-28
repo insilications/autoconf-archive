@@ -1,5 +1,5 @@
 PKG_NAME := autoconf-archive
-URL = https://mirrors.kernel.org/gnu/autoconf-archive/autoconf-archive-2019.01.06.tar.xz
+URL = https://git.savannah.gnu.org/git/autoconf-archive.git
 ARCHIVES = 
 
 include ../common/Makefile.common
